@@ -1,0 +1,22 @@
+name: Build and Push Image
+on:
+  push:
+  schedule:
+    - cron: '0 0 * * 2,5'
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v7
+      - name: Log in to GitHub Container Registry
+        run: |
+          echo "${{ secrets.GITHUB_TOKEN }}" | podman login ghcr.io -u ${{ github.actor }} --password-stdin
+      - name: Build and push image
+        run: |
+          IMAGE_TAG="ghcr.io/${{ github.repository }}:latest"
+          podman build --pull=newer -t "$IMAGE_TAG" -f ./Containerfile .
+          podman push "$IMAGE_TAG"
