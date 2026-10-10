@@ -47,5 +47,15 @@ dnf -y install \
     keyd \
     stow
 
-# 4. Cleanup
+# 4. Declarative system configuration
+# Satisfy bootc declarative sysusers requirement for the docker group installed by docker-ce
+echo "g docker - -" > /usr/lib/sysusers.d/docker.conf
+sed -i '/^docker:/d' /etc/group
+
+# 5. Cleanup
 dnf clean all
+rm -rf /run/dnf \
+       /var/log/dnf5.log \
+       /var/lib/dnf \
+       /var/cache/libdnf5 \
+       /var/cache/ldconfig/*
