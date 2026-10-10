@@ -2,9 +2,9 @@
 
 ## Introduction
 
-This is my daily driver, a custom [Fedora Silverblue](https://fedoraproject.org/atomic-desktops/silverblue/) image, it's an atomic and immutable Linux distro made and maintained by the Fedora project. I got bored to modifying Arch with Bash scripts or Ansible handbooks.
+This is my daily driver, a custom [Fedora Silverblue](https://fedoraproject.org/atomic-desktops/silverblue/) image, it's an atomic and immutable Linux distro made and maintained by the Fedora project. I got bored of modifying Arch with Bash scripts or Ansible handbooks.
 
-The reason for choosing a distro like this is that I want to make my Linux workstation as simple, stable and maintainable as possible. Here you'll see that I make use of cheap/free infrastructure, and standard off-the-shelf tools to simplify my setup.
+The reason for choosing a distro like this is that I want to make my Linux workstation as simple, stable, and maintainable as possible. Here you'll see that I make use of cheap/free infrastructure, and standard off-the-shelf tools to simplify my setup.
 
 So modifying my Linux installation today means simply writing a `Containerfile`, this means dotfiles-and-setup-script routine, no drift between machines, no lingering scripts, etc.
 
