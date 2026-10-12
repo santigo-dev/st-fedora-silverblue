@@ -30,7 +30,6 @@ dnf -y remove \
 
 # 3. Package Installations
 dnf -y install \
-    cava \
     code \
     containerd.io \
     distrobox \
