@@ -41,6 +41,8 @@ dnf -y install \
     fcitx5-configtool \
     fcitx5-gtk \
     fcitx5-qt \
+    fuse \
+    fuse-libs \
     ghostty \
     gnome-browser-connector \
     just \
