@@ -2,20 +2,17 @@
 
 ## Introduction
 
-This is my daily driver, a custom [Fedora Silverblue](https://fedoraproject.org/atomic-desktops/silverblue/) image, it's an atomic and immutable Linux distro made and maintained by the Fedora project. I got bored of modifying Arch with Bash scripts or Ansible handbooks.
+This is my daily driver: a custom [Fedora Silverblue](https://fedoraproject.org/atomic-desktops/silverblue/) image, an atomic desktop maintained by the Fedora project. I got bored of modifying Arch with Bash scripts or Ansible handbooks.
 
 The reason for choosing a distro like this is that I want to make my Linux workstation as simple, stable, and maintainable as possible. Here you'll see that I make use of cheap/free infrastructure, and standard off-the-shelf tools to simplify my setup.
 
 So modifying my Linux installation today means simply writing a `Containerfile`, this means dotfiles-and-setup-script routine, no drift between machines, no lingering scripts, etc.
 
-Since this is an immutable, where most of the filesystem is read-only, also forces you to strictly work containerized, which for some people it's a real problem, but if you take a look at the files, I don't really have a fancy config, and it's updated rarely, so it fits me. It's quite "declarative" too, without being NixOS.
-
-> [!NOTE]
-> This repo started as a Kinoite (KDE) image and has since been migrated to Silverblue (GNOME).
+Silverblue's image-based model keeps the base system read-only, so I manage system-level changes in the `Containerfile`. Applications and development environments can still be installed and managed separately, for example with Flatpak and Distrobox. The configuration here is intentionally simple and changes rarely; it's quite "declarative" too, without being NixOS.
 
 ## Description
 
-The base here is `quay.io/fedora-ostree-desktops/silverblue:45`. On top of it:
+The base is [`quay.io/fedora-ostree-desktops/silverblue`](https://quay.io/repository/fedora-ostree-desktops/silverblue), with the Fedora version set by `FEDORA_VERSION` in the `Containerfile` (currently `45`). On top of it:
 
 **Added:**
 - `just` as a command runner, `stow` for dotfile management.
@@ -25,7 +22,6 @@ The base here is `quay.io/fedora-ostree-desktops/silverblue:45`. On top of it:
 - `code` (Visual Studio Code, via Microsoft repo).
 - Docker CE (`docker-ce`, `docker-ce-cli`, `containerd.io`, `docker-compose-plugin`) with socket activation.
 - `fcitx5` and related plugins for input method support.
-- `cava` for terminal audio visualizer.
 - `gnome-browser-connector` for GNOME Shell extensions.
 
 **Removed:**
@@ -34,7 +30,7 @@ The base here is `quay.io/fedora-ostree-desktops/silverblue:45`. On top of it:
 
 ## How It Actually Gets Built
 
-On a schedule the image is built by GitHub Actions, which spawns a worker to handle the build — nothing has to happen on your local machine. It pulls the base Silverblue image, runs `scripts/build.sh` inside the container, and produces a new OCI image pushed to the GitHub Container Registry (`ghcr.io`).
+On a schedule the image is built by GitHub Actions, which spawns a worker to handle the build — nothing has to happen on your local machine. It pulls the base Silverblue image, runs `scripts/build.sh` inside the container, and produces a new OCI image pushed to the [GitHub Container Registry](https://github.com/santigo-dev/st-fedora-silverblue/pkgs/container/st-fedora-silverblue) (`ghcr.io`).
 
 On the machine itself, `bootc` takes over from there. It's not a package manager like `dnf`, but more like the tool that manages which full image you're booted into, handles rollbacks if something goes wrong, and keeps the system updated in the background through a systemd timer.
 
