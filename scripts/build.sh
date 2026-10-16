@@ -44,6 +44,9 @@ dnf -y install \
     fuse-libs \
     ghostty \
     gnome-browser-connector \
+    gnome-shell-extension-gpaste \
+    gpaste \
+    gpaste-ui \
     just \
     keyd \
     stow

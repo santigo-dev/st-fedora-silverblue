@@ -23,6 +23,7 @@ The base is [`quay.io/fedora-ostree-desktops/silverblue`](https://quay.io/reposi
 - Docker CE (`docker-ce`, `docker-ce-cli`, `containerd.io`, `docker-compose-plugin`) with socket activation.
 - `fcitx5` and related plugins for input method support.
 - `gnome-browser-connector` for GNOME Shell extensions.
+- GPaste clipboard history, its graphical settings UI, and GNOME Shell extension.
 
 **Removed:**
 - `firefox` and `firefox-langpacks` (use a containerized or Flatpak browser instead).
