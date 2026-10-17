@@ -47,6 +47,7 @@ dnf -y install \
     gnome-shell-extension-gpaste \
     gpaste \
     gpaste-ui \
+    iw \
     just \
     keyd \
     stow
