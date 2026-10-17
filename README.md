@@ -48,6 +48,8 @@ The `bootc-fetch.timer` systemd unit runs `bootc upgrade` automatically:
 - **15 minutes** after boot.
 - Every **24 hours** thereafter.
 
+This fetches and stages an update for the next reboot. It does not reboot the machine immediately like the built-in timer `bootc-fetch-apply-updates.timer`, which applies updates and reboots when one is available. On a desktop, updates should not interrupt work or restart the machine without the user's choice.
+
 ### Post-Install Setup
 
 #### Docker
