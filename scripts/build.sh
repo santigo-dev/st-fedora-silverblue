@@ -50,6 +50,7 @@ dnf -y install \
     iw \
     just \
     keyd \
+    ydotool \
     stow
 
 # 4. Declarative system configuration

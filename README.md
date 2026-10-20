@@ -24,6 +24,7 @@ The base is [`quay.io/fedora-ostree-desktops/silverblue`](https://quay.io/reposi
 - `fcitx5` and related plugins for input method support.
 - `gnome-browser-connector` for GNOME Shell extensions.
 - GPaste clipboard history, its graphical settings UI, and GNOME Shell extension.
+- `ydotool` for host-side Wayland input automation.
 
 **Removed:**
 - `firefox` and `firefox-langpacks` (use a containerized or Flatpak browser instead).
@@ -61,6 +62,47 @@ To use Docker without `sudo`, add your user to the `docker` group:
 sudo usermod -aG docker $USER
 ```
 *(Log out and back in for group changes to take effect.)*
+
+#### Vocalinux
+Install Vocalinux as a Flatpak for a self-contained speech engine that is independent of the host Python version:
+
+```bash
+flatpak install https://vocahq.github.io/vocalinux-flatpak/com.vocalinux.Vocalinux.flatpakref
+```
+
+The Flatpak includes its own `ydotool` tools and uses the desktop RemoteDesktop portal for text injection when available. Host-side `ydotool` installation and daemon configuration below are not needed for Vocalinux’s Flatpak injection path. The app may request microphone or RemoteDesktop portal access on first use.
+
+#### Host-side ydotool
+The image includes `ydotool`. To use the host package directly, `/dev/uinput` must be available, the `ydotoold` system service must run, and the service socket must be accessible to your login user.
+
+Run these commands after switching to the image. The `input` group grants access to keyboard devices and the ydotool socket, so only add trusted local users:
+
+```bash
+# Load uinput now and on future boots.
+sudo modprobe uinput
+echo uinput | sudo tee /etc/modules-load.d/uinput.conf
+
+# Let your user access the ydotool service socket.
+sudo usermod -aG input "$USER"
+sudo mkdir -p /etc/systemd/system/ydotool.service.d
+sudo tee /etc/systemd/system/ydotool.service.d/override.conf >/dev/null <<'EOF'
+[Service]
+Group=input
+RuntimeDirectory=%p
+ExecStart=
+ExecStart=/usr/bin/ydotoold -p %t/%p/socket -P 660
+EOF
+
+# Point graphical apps and command-line clients at the shared service socket.
+sudo sed -i '/^YDOTOOL_SOCKET=/d' /etc/environment
+echo 'YDOTOOL_SOCKET=/run/ydotool/socket' | sudo tee -a /etc/environment
+
+sudo systemctl daemon-reload
+sudo systemctl enable --now ydotool.service
+sudo systemctl restart ydotool.service
+```
+
+Log out and back in so your session picks up the `input` group and socket environment variable. Check the daemon with `systemctl status ydotool.service`, then run `ydotool type 'ydotool is working'` with a text field focused.
 
 ## Repository Layout
 
