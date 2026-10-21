@@ -23,6 +23,7 @@ The base is [`quay.io/fedora-ostree-desktops/silverblue`](https://quay.io/reposi
 - Docker CE (`docker-ce`, `docker-ce-cli`, `containerd.io`, `docker-compose-plugin`) with socket activation.
 - `fcitx5` and related plugins for input method support.
 - `gnome-browser-connector` for GNOME Shell extensions.
+- `gnome-tweaks` for additional GNOME desktop settings.
 - GPaste clipboard history, its graphical settings UI, and GNOME Shell extension.
 - `ydotool` for host-side Wayland input automation.
 

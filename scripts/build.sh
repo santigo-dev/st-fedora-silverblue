@@ -44,6 +44,7 @@ dnf -y install \
     fuse-libs \
     ghostty \
     gnome-browser-connector \
+    gnome-tweaks \
     gnome-shell-extension-gpaste \
     gpaste \
     gpaste-ui \
