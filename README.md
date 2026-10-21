@@ -17,6 +17,8 @@ The base is [`quay.io/fedora-ostree-desktops/silverblue`](https://quay.io/reposi
 **Added:**
 - `just` as a command runner, `stow` for dotfile management.
 - `distrobox` for running other Linux environments in containers.
+- `git`, `ripgrep`, `rsync`, `tmux`, and `neovim` for remote development workflows.
+- `openssh-server` for optional SSH access to the machine.
 - `ghostty` (via COPR) as the terminal emulator.
 - `keyd` (via COPR) for keyboard remapping.
 - `code` (Visual Studio Code, via Microsoft repo).
@@ -53,6 +55,15 @@ The `bootc-fetch.timer` systemd unit runs `bootc upgrade` automatically:
 This fetches and stages an update for the next reboot. It does not reboot the machine immediately like the built-in timer `bootc-fetch-apply-updates.timer`, which applies updates and reboots when one is available. On a desktop, updates should not interrupt work or restart the machine without the user's choice.
 
 ### Post-Install Setup
+
+#### Remote development host
+The image includes OpenSSH server and common remote-development tools. SSH is not enabled automatically. On machines you intend to use as remote hosts, enable it with:
+
+```bash
+sudo systemctl enable --now sshd
+```
+
+Set up key-based login for your user and connect only over a trusted network or VPN. Configure the host firewall to allow SSH only on networks where remote access is intended. The remote tools (`git`, `tmux`, `rsync`, `ripgrep`, and `neovim`) are available in the login shell; install project-specific language runtimes and dependencies in a Distrobox or other development environment as needed.
 
 #### Docker
 Docker CE is installed with socket activation (`docker.socket`), so the daemon only starts on-demand when called rather than running continuously in the background.

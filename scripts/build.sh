@@ -42,6 +42,7 @@ dnf -y install \
     fcitx5-qt \
     fuse \
     fuse-libs \
+    git \
     ghostty \
     gnome-browser-connector \
     gnome-tweaks \
@@ -51,6 +52,11 @@ dnf -y install \
     iw \
     just \
     keyd \
+    neovim \
+    openssh-server \
+    ripgrep \
+    rsync \
+    tmux \
     ydotool \
     stow
 
